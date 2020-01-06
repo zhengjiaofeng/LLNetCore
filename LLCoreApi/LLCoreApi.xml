@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LLCoreApi</name>
+    </assembly>
+    <members>
+        <member name="T:LLCoreApi.Common.Base.JwtConfiguration">
+            <summary>
+            JWT配置类
+            </summary>
+        </member>
+        <member name="M:LLCoreApi.Common.Base.JwtConfiguration.AddJwtConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            初始化JWT配置
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+        </member>
+        <member name="T:LLCoreApi.Controllers.AccountController">
+            <summary>
+             Account
+            </summary>
+        </member>
+        <member name="M:LLCoreApi.Controllers.AccountController.Login(LLCoreApi.Models.UserInfo.UserInfoDto)">
+            <summary>
+            登录
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:LLCoreApi.Controllers.TokenController">
+            <summary>
+            Token
+            </summary>
+        </member>
+        <member name="M:LLCoreApi.Controllers.TokenController.#ctor(Microsoft.Extensions.Options.IOptions{LLCoreApi.Models.Base.JWTSetting})">
+            <summary>
+            TokenController
+            </summary>
+            <param name="_jwtsettings"></param>
+        </member>
+        <member name="M:LLCoreApi.Controllers.TokenController.GetToken">
+            <summary>
+             获取token
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LLCoreApi.Controllers.TokenController.TestToken">
+            <summary>
+            TestToken
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LLCoreApi.Controllers.TokenController.ReadToken(System.String)">
+            <summary>
+            ReadToken
+            </summary>
+            <param name="tokenstr"></param>
+            <returns></returns>
+        </member>
+        <member name="T:LLCoreApi.Models.Base.AppSetting">
+            <summary>
+            Setting类
+            </summary>
+        </member>
+        <member name="T:LLCoreApi.Models.Base.JWTSetting">
+            <summary>
+            JWTSetting
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.Base.JWTSetting.Issuer">
+            <summary>
+            颁发机构
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.Base.JWTSetting.Audience">
+            <summary>
+            颁发给谁
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.Base.JWTSetting.SecretKey">
+            <summary>
+            密钥
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.Base.ResponeResult.msg">
+            <summary>
+            消息
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.Base.ResponeResult.data">
+            <summary>
+            数据
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.Base.ResponeResult.state">
+            <summary>
+            状态码
+            </summary>
+        </member>
+        <member name="T:LLCoreApi.Models.UserInfo.UserInfoDto">
+            <summary>
+            用户请求dto
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.UserInfo.UserInfoDto.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.UserInfo.UserInfoDto.PassWord">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="M:LLCoreApi.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            ConfigureServices
+            </summary>
+            <param name="services"></param>
+        </member>
+    </members>
+</doc>
