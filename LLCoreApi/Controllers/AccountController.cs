@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LLC.Common.DB;
+using LLC.IService.IServices.Users;
 using LLCoreApi.Models.Base;
 using LLCoreApi.Models.UserInfo;
 using Microsoft.AspNetCore.Http;
@@ -16,20 +18,22 @@ namespace LLCoreApi.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
+        private readonly IUserSevice iUserSevice;
+        public AccountController(IUserSevice _iUserSevice)
+        {
+            iUserSevice = _iUserSevice;
+        }
+
         /// <summary>
         /// 登录
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Login([FromBody]UserInfoDto model )
+        public IActionResult Login([FromBody]UserInfoDto model)
         {
-            var date = DateTime.Parse("2020-02-01");
-            var nextDate = date.AddMonths(1);
-            string startTime = date.Year + "-" + date.Month + "-" + "01";
-            string endTime = nextDate.Year + "-" + nextDate.Month + "-" + "01";
-            var req = Request;
             ResponeResult result = new ResponeResult();
+            var a = iUserSevice.GetUserByUserAcount(model.UserName);
             if (model.UserName == "zjf")
             {
                 result.state = "200";
@@ -42,7 +46,23 @@ namespace LLCoreApi.Controllers
             }
             //返回json
             return new JsonResult(result);
-            
+
+        }
+
+
+        /// <summary>
+        /// 初始化用户
+        /// </summary>
+        /// <returns></returns>
+
+        [HttpGet]
+        public async Task<JsonResult> LLInit()
+        {
+            ResponeResult result = new ResponeResult();
+            result.state = "200";
+
+            //返回json
+            return new JsonResult(result);
         }
     }
 }

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>E:\VSSave\vs2019\LLCoreApi\LLCoreApi\LLCoreApi\bin\Debug\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LLC.Common\LLC.Common.csproj" />
+    <ProjectReference Include="..\LLC.IService\LLC.IService.csproj" />
+    <ProjectReference Include="..\LLC.Models\LLC.Models.csproj" />
+  </ItemGroup>
+
+</Project>
