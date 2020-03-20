@@ -19,6 +19,6 @@ namespace LLC.IService.IServices.Users
         /// 初始化用户
         /// </summary>
         /// <returns></returns>
-        Task<int> AddLLUserInit();
+        int AddLLUserInit();
     }
 }

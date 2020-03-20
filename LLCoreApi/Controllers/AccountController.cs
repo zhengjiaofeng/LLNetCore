@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LLC.Common.DB;
 using LLC.IService.IServices.Users;
+using LLC.Models.Users;
 using LLCoreApi.Models.Base;
 using LLCoreApi.Models.UserInfo;
 using Microsoft.AspNetCore.Http;
@@ -33,17 +34,17 @@ namespace LLCoreApi.Controllers
         public IActionResult Login([FromBody]UserInfoDto model)
         {
             ResponeResult result = new ResponeResult();
-            var a = iUserSevice.GetUserByUserAcount(model.UserName);
-            if (model.UserName == "zjf")
+            result.state = "501";
+            result.msg = "faild";
+            Task<U_Users> tUsers = iUserSevice.GetUserByUserAcount(model.UserName);
+
+            if (tUsers.Result != null)
             {
                 result.state = "200";
                 result.msg = "success";
             }
-            else
-            {
-                result.state = "501";
-                result.msg = "faild";
-            }
+
+
             //返回json
             return new JsonResult(result);
 
@@ -56,10 +57,18 @@ namespace LLCoreApi.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        public async Task<JsonResult> LLInit()
+        public JsonResult LLInit()
         {
             ResponeResult result = new ResponeResult();
-            result.state = "200";
+            result.state = "500";
+            result.msg = "faild";
+            int add = iUserSevice.AddLLUserInit();
+
+            if (add > 0)
+            {
+                result.state = "200";
+                result.msg = "success";
+            }
 
             //返回json
             return new JsonResult(result);
