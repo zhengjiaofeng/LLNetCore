@@ -1,5 +1,6 @@
 using Autofac;
 using LLC.Common.DB;
+using LLC.Common.Tool.Configs;
 using LLCoreApi.Common.Base;
 using LLCoreApi.Common.Base.Configurations;
 using LLCoreApi.Common.Base.Middlewares.ExceptionMiddleware;
@@ -14,7 +15,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
 using System.Reflection;
@@ -41,26 +41,15 @@ namespace LLCoreApi
         public void ConfigureServices(IServiceCollection services)
         {
             #region 初始化配置
+            services.AddSingleton(new AppSettingUtil());
             //初始化配置
             services.Configure<JWTSetting>(Configuration.GetSection("JWTSetting"));
             #endregion
 
+            #region 组件初始化配置
+
             #region 跨域 指定域名策略 cors
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy("LLCoreApiSpecificOrigins", build =>
-                {
-                    /*
-                     *1.WithOrigins：允许http://localhost:7777， http://192.168.0.10:7777 访问
-                     *2.AllowCredentials /指定处理cookie
-                     *                      
-                     */
-                    build.WithOrigins("http://localhost:7777", "http://192.168.0.10:7777").AllowAnyHeader()
-                                .AllowAnyMethod().AllowCredentials();
-
-                });
-            });
+            services.AddCorsInit(Configuration);
             #endregion
 
             #region  依赖注入
@@ -72,50 +61,20 @@ namespace LLCoreApi
             #endregion
 
             #region 添加Swagger
-
-            //添加Swagger.
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "LLCoreAPI", Version = "v1", Contact = new OpenApiContact { Name = "llcode", Email = "llcode.com" } });
-
-                // add security definitions (Swagger UI 上添加 Authorization 按钮 )
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
-                {
-                    Description = "JWT Bearer 授权 \"Authorization:     Bearer+空格+token\"",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                });
-
-                //Swagger 添加token
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    { new OpenApiSecurityScheme
-                        {
-                        Reference=new OpenApiReference(){
-                        Id="Bearer",
-                        Type=ReferenceType.SecurityScheme
-                        }
-                        },Array.Empty<string>()
-                    }
-                });
-
-                //接口描述
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
-                LLC.Common.LogHeleper.Log4Util.Debug(xmlFile.ToString());
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
-
-            });
+            //添加Swagger
+            services.AddSwaggerInit(Configuration);
             #endregion
 
-            #region jwt
+            #region 初始化JWT配置 
             //初始化JWT配置
             services.AddJwtConfiguration(Configuration);
             #endregion
 
             #region MiniProfiler SQL监视工具
+            
             services.AddMiniProfilerInit(Configuration);
+            #endregion
+
             #endregion
 
             //services.AddControllers();
@@ -138,8 +97,11 @@ namespace LLCoreApi
 
             //强制https 跳转
             app.UseHttpsRedirection();
+
+            #region Cors
             //跨域请求
             app.UseCors("LLCoreApiSpecificOrigins");
+            #endregion
 
             #region 配置Swagger
             //配置Swagger
@@ -151,7 +113,6 @@ namespace LLCoreApi
                 c.RoutePrefix = string.Empty;
             });
             #endregion
-
 
             app.UseRouting();
 

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using LLC.Common.DB;
 using LLC.IService.IServices.Users;
 using LLC.Models.Users;
+using LLCoreApi.Common.Tool;
 using LLCoreApi.Models.Base;
 using LLCoreApi.Models.UserInfo;
 using Microsoft.AspNetCore.Http;
@@ -37,13 +39,38 @@ namespace LLCoreApi.Controllers
             result.state = "501";
             result.msg = "faild";
             Task<U_Users> tUsers = iUserSevice.GetUserByUserAcount(model.UserName);
-
-            if (tUsers.Result != null)
+            U_Users u_user = tUsers.Result;
+            if (u_user != null)
             {
-                result.state = "200";
-                result.msg = "success";
-            }
+                if (u_user.UserPassWord != model.PassWord)
+                {
+                    result.state = "501";
+                    result.msg = "密码错误！";
 
+                }
+                else
+                {
+                    List<Claim> claimList = new List<Claim>()
+                    {
+                         new Claim(ClaimTypes.Sid, u_user.Id.ToString()),
+                         new Claim(ClaimTypes.Name, u_user.UserAcount)
+                    };
+                    string token = JWTTokenUtil.GetToken(claimList);
+
+                    if (!string.IsNullOrEmpty(token))
+                    {
+                        result.state = "200";
+                        result.msg = "登录成功！";
+                        result.data = token;
+                    }
+                    else
+                    {
+                        result.state = "501";
+                        result.msg = "登录失败，请重新登录！";
+                    }
+                }
+
+            }
 
             //返回json
             return new JsonResult(result);
@@ -70,6 +97,27 @@ namespace LLCoreApi.Controllers
                 result.msg = "success";
             }
 
+            //返回json
+            return new JsonResult(result);
+        }
+
+
+        /// <summary>
+        /// RefreshToken
+        /// </summary>
+        /// <param name="jwtToken"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public JsonResult RefreshToken(string jwtToken)
+        {
+            ResponeResult result = new ResponeResult();
+            result.state = "500";
+            result.msg = "faild";
+
+            if(!string.IsNullOrEmpty(jwtToken))
+            {
+              JWTTokenUtil.SerializeJwt(jwtToken);
+            }
             //返回json
             return new JsonResult(result);
         }

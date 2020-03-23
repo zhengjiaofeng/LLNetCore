@@ -31,5 +31,10 @@ namespace LLCoreApi.Models.Base
         /// 密钥
         /// </summary>
         public string SecretKey { get; set; }
+
+        /// <summary>
+        /// 超时时长
+        /// </summary>
+        public int ExpiresTime { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace LLCoreApi.Common.Base.Configurations
     public static class MiniProfilerInit
     {
         /// <summary>
-        /// 初始加载MiniProfiler 使用"/profiler/results"来访问分析报告
+        /// MiniProfiler配置类 初始加载MiniProfiler 使用"/profiler/results"来访问分析报告
         /// </summary>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
@@ -18,8 +18,6 @@ namespace LLCoreApi.Common.Base.Configurations
                 //按照当前配置，你可以使用"/profiler/results"来访问分析报告
                 options.RouteBasePath = "/profiler";
             }).AddEntityFramework();
-
-
         }
     }
 }
