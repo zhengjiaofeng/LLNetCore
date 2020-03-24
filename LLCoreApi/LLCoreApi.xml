@@ -76,7 +76,7 @@
             <summary>
             解析jwtToken
             </summary>
-            <param name="jwtStr"></param>
+            <param name="jwtStr">jwtToken</param>
         </member>
         <member name="T:LLCoreApi.Controllers.AccountController">
             <summary>

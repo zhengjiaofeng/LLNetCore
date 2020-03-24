@@ -110,6 +110,13 @@ namespace LLCoreApi.Controllers
         [HttpGet]
         public JsonResult RefreshToken(string jwtToken)
         {
+            /* 
+             * 1. refreshtoken 没有过期 存储redis
+             * 2. jwtToken  有效
+             * 3. 重新生成 jwtToken 
+             * 
+             */
+
             ResponeResult result = new ResponeResult();
             result.state = "500";
             result.msg = "faild";

@@ -1,5 +1,6 @@
 using Autofac;
 using LLC.Common.DB;
+using LLC.Common.Redis;
 using LLC.Common.Tool.Configs;
 using LLCoreApi.Common.Base;
 using LLCoreApi.Common.Base.Configurations;
@@ -42,6 +43,7 @@ namespace LLCoreApi
         {
             #region 初始化配置
             services.AddSingleton(new AppSettingUtil());
+            services.AddSingleton<IRedisCacheManager, RedisCacheManager>();
             //初始化配置
             services.Configure<JWTSetting>(Configuration.GetSection("JWTSetting"));
             #endregion

@@ -62,12 +62,11 @@ namespace LLCoreApi.Common.Tool
         /// <summary>
         /// 解析jwtToken
         /// </summary>
-        /// <param name="jwtStr"></param>
+        /// <param name="jwtStr">jwtToken</param>
         public static void SerializeJwt(string jwtStr)
         {
             var jwtHandler = new JwtSecurityTokenHandler();
             JwtSecurityToken jwtToken = jwtHandler.ReadJwtToken(jwtStr);
-
             object sid;
             object name;
             jwtToken.Payload.TryGetValue(ClaimTypes.Sid, out sid);

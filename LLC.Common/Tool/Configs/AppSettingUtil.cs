@@ -6,7 +6,10 @@ using System.Text;
 
 namespace LLC.Common.Tool.Configs
 {
-   public class AppSettingUtil
+    /// <summary>
+    /// 读取AppSetting配置类
+    /// </summary>
+    public class AppSettingUtil
     {
 
         private static IConfiguration _configuration;
