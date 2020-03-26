@@ -22,4 +22,7 @@ namespace LLCoreApi.Models.Base
         /// </summary>
         public string state { get; set; }
     }
+
+
+
 }

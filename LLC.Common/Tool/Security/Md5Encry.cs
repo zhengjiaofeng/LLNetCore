@@ -1,5 +1,5 @@
 ﻿using System.Text;
-namespace LLC.Common.Tool.MD5
+namespace LLC.Common.Tool.Security
 {
     public class Md5Encry
     {

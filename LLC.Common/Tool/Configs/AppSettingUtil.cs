@@ -6,8 +6,9 @@ using System.Text;
 
 namespace LLC.Common.Tool.Configs
 {
+
     /// <summary>
-    /// 读取AppSetting配置类
+    /// 读取AppSetting.json配置类
     /// </summary>
     public class AppSettingUtil
     {

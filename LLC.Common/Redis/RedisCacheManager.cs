@@ -126,13 +126,25 @@ namespace LLC.Common.Redis
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <param name="cacheTime"></param>
-        public void Set(string key, object value, TimeSpan cacheTime)
+        public bool Set(string key, object value, TimeSpan cacheTime)
         {
-            if (value != null)
+            var result = false;
+            try
             {
-                //序列化，将object值生成RedisValue
-                redisConnection.GetDatabase().StringSet(key, SerializeHelper.Serialize(value), cacheTime);
+                if (value != null)
+                {
+                    
+                    //序列化，将object值生成RedisValue
+                    result = redisConnection.GetDatabase().StringSet(key, SerializeHelper.Serialize(value), cacheTime);
+                }
             }
+
+            catch (Exception ex)
+            {
+            }
+
+            return result;
+
         }
 
         /// <summary>
@@ -145,6 +157,6 @@ namespace LLC.Common.Redis
         {
             return redisConnection.GetDatabase().StringSet(key, value, TimeSpan.FromSeconds(120));
         }
-    
+
     }
 }

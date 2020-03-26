@@ -1,5 +1,5 @@
 ﻿using LLC.Common.DB;
-using LLC.Common.Tool.MD5;
+using LLC.Common.Tool.Security;
 using LLC.IService.IServices.Users;
 using LLC.Models.Users;
 using Microsoft.EntityFrameworkCore;

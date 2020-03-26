@@ -42,7 +42,9 @@ namespace LLCoreApi
         public void ConfigureServices(IServiceCollection services)
         {
             #region 初始化配置
+            //读取AppSetting.json配置类
             services.AddSingleton(new AppSettingUtil());
+            //redis
             services.AddSingleton<IRedisCacheManager, RedisCacheManager>();
             //初始化配置
             services.Configure<JWTSetting>(Configuration.GetSection("JWTSetting"));

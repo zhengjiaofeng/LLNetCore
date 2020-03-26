@@ -67,7 +67,7 @@
             JWTToken
             </summary>
         </member>
-        <member name="M:LLCoreApi.Common.Tool.JWTTokenUtil.GetToken(System.Collections.Generic.List{System.Security.Claims.Claim})">
+        <member name="M:LLCoreApi.Common.Tool.JWTTokenUtil.GetToken(System.Collections.Generic.List{System.Security.Claims.Claim},System.DateTime@)">
             <summary>
             获取token
             </summary>
@@ -96,11 +96,11 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:LLCoreApi.Controllers.AccountController.RefreshToken(System.String)">
+        <member name="M:LLCoreApi.Controllers.AccountController.ReSetToken(LLCoreApi.Models.ViewModels.Account.ReSetTokenDto)">
             <summary>
-            RefreshToken
+            重置token
             </summary>
-            <param name="jwtToken"></param>
+            <param name="tokenDto">参数</param>
             <returns></returns>
         </member>
         <member name="M:LLCoreApi.Controllers.ErrorController.Index">
@@ -208,6 +208,91 @@
         <member name="P:LLCoreApi.Models.UserInfo.UserInfoDto.PassWord">
             <summary>
             密码
+            </summary>
+        </member>
+        <member name="T:LLCoreApi.Models.UserInfo.UserInfoJwtDto">
+            <summary>
+            jtw解析用户信息
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.UserInfo.UserInfoJwtDto.UserId">
+            <summary>
+            用户id
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.UserInfo.UserInfoJwtDto.UserAcount">
+            <summary>
+            账户
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.UserInfo.UserInfoJwtDto.Role">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="T:LLCoreApi.Models.ViewModels.Account.LoginViewModel">
+            <summary>
+            登录
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.ViewModels.Account.LoginViewModel.token">
+            <summary>
+            登录token
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.ViewModels.Account.LoginViewModel.tokenExpired">
+            <summary>
+            token 有效期
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.ViewModels.Account.LoginViewModel.refreshToken">
+            <summary>
+            refreshToken
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.ViewModels.Account.LoginViewModel.refTokenExpired">
+            <summary>
+            refreshToken 有效期
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.ViewModels.Account.LoginViewModel.userId">
+            <summary>
+            用户id
+            </summary>
+        </member>
+        <member name="T:LLCoreApi.Models.ViewModels.Account.ReSetTokenDto">
+            <summary>
+            刷新令牌
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.ViewModels.Account.ReSetTokenDto.userId">
+            <summary>
+             用户id
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.ViewModels.Account.ReSetTokenDto.jwtToken">
+            <summary>
+            token 令牌
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.ViewModels.Account.ReSetTokenDto.refreshToken">
+            <summary>
+            refreshToken
+            </summary>
+        </member>
+        <member name="T:LLCoreApi.Models.ViewModels.Account.JwtTokenDto">
+            <summary>
+            jwtTokenDto
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.ViewModels.Account.JwtTokenDto.token">
+            <summary>
+            登录token
+            </summary>
+        </member>
+        <member name="P:LLCoreApi.Models.ViewModels.Account.JwtTokenDto.tokenExpired">
+            <summary>
+            token 有效期
             </summary>
         </member>
         <member name="M:LLCoreApi.Startup.ConfigureContainer(Autofac.ContainerBuilder)">

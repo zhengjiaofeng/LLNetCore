@@ -1,5 +1,6 @@
 ﻿using LLC.Common.LogHeleper;
 using LLC.Common.Tool.Configs;
+using LLCoreApi.Models.UserInfo;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -21,18 +22,18 @@ namespace LLCoreApi.Common.Tool
         /// <summary>
         /// 获取token
         /// </summary>
-        public static string GetToken(List<Claim> claimList)
+        public static string GetToken(List<Claim> claimList, ref DateTime jwtExpires)
         {
             string result = "";
 
             try
             {
-             
+
                 string SecretKey = AppSettingUtil.GetSectionValue("JWTSetting:SecretKey");
                 int ExpiresTime = Int32.Parse(AppSettingUtil.GetSectionValue("JWTSetting:ExpiresTime"));
                 string Issuer = AppSettingUtil.GetSectionValue("JWTSetting:Issuer");
                 string Audience = AppSettingUtil.GetSectionValue("JWTSetting:Audience");
-
+                jwtExpires = DateTime.Now.AddMinutes(ExpiresTime);
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));
                 //签名证书(秘钥，加密算法)
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -42,12 +43,11 @@ namespace LLCoreApi.Common.Tool
                   issuer: Issuer,
                   audience: Audience,
                   //超时时长
-                  expires: DateTime.Now.AddMinutes(ExpiresTime),
+                  expires: jwtExpires,
                   //签名
                   signingCredentials: creds,
                   //用户信息
                   claims: claimList);
-
                 result = new JwtSecurityTokenHandler().WriteToken(token);
             }
             catch (Exception ex)
@@ -63,15 +63,28 @@ namespace LLCoreApi.Common.Tool
         /// 解析jwtToken
         /// </summary>
         /// <param name="jwtStr">jwtToken</param>
-        public static void SerializeJwt(string jwtStr)
+        public static UserInfoJwtDto SerializeJwt(string jwtStr)
         {
-            var jwtHandler = new JwtSecurityTokenHandler();
-            JwtSecurityToken jwtToken = jwtHandler.ReadJwtToken(jwtStr);
-            object sid;
-            object name;
-            jwtToken.Payload.TryGetValue(ClaimTypes.Sid, out sid);
-            jwtToken.Payload.TryGetValue(ClaimTypes.Name, out name);
-            
+            UserInfoJwtDto dto = new UserInfoJwtDto();
+
+            try
+            {
+                var jwtHandler = new JwtSecurityTokenHandler();
+                JwtSecurityToken jwtToken = jwtHandler.ReadJwtToken(jwtStr);
+                object sid;
+                object name;
+                jwtToken.Payload.TryGetValue(ClaimTypes.Sid, out sid);
+                jwtToken.Payload.TryGetValue(ClaimTypes.Name, out name);
+                dto.UserId = sid.ToString();
+                dto.UserAcount = name.ToString();
+            }
+            catch (Exception ex)
+            { 
+                
+            }
+            return dto;
+
         }
+
     }
 }
