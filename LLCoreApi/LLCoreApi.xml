@@ -260,6 +260,11 @@
             用户id
             </summary>
         </member>
+        <member name="P:LLCoreApi.Models.ViewModels.Account.LoginViewModel.userAccount">
+            <summary>
+            用户账号
+            </summary>
+        </member>
         <member name="T:LLCoreApi.Models.ViewModels.Account.ReSetTokenDto">
             <summary>
             刷新令牌

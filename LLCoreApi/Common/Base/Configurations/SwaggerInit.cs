@@ -47,7 +47,7 @@ namespace LLCoreApi.Common.Base.Configurations
 
                 //接口描述
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
-                LLC.Common.LogHeleper.Log4Util.Debug(xmlFile.ToString());
+                //LLC.Common.LogHeleper.Log4Util.Debug(xmlFile.ToString());
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });

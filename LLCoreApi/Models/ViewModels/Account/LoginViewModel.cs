@@ -34,6 +34,11 @@ namespace LLCoreApi.Models.ViewModels.Account
         /// 用户id
         /// </summary>
         public string userId { get; set; }
+
+        /// <summary>
+        /// 用户账号
+        /// </summary>
+        public string userAccount { get; set; }
     }
 
     /// <summary>

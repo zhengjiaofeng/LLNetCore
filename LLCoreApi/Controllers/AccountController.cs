@@ -46,7 +46,7 @@ namespace LLCoreApi.Controllers
             U_Users u_user = tUsers.Result;
             if (u_user != null)
             {
-                if (u_user.UserPassWord != model.PassWord)
+                if (u_user.UserPassWord.ToUpper() != model.PassWord.ToUpper())
                 {
                     result.msg = "密码错误！";
 
@@ -73,10 +73,11 @@ namespace LLCoreApi.Controllers
                         {
                             LoginViewModel loginVM = new LoginViewModel();
                             loginVM.token = token;
-                            loginVM.tokenExpired = DateExtensions.ToShortDate(jwtExpires);
+                            loginVM.tokenExpired = DateExtensions.ToLongDate(jwtExpires);
                             loginVM.refreshToken = refTokenBase64;
-                            loginVM.refTokenExpired = DateExtensions.ToShortDate(DateTime.Now.AddMinutes(120));
+                            loginVM.refTokenExpired = DateExtensions.ToLongDate(DateTime.Now.AddMinutes(120));
                             loginVM.userId = u_user.Id.ToString();
+                            loginVM.userAccount = u_user.UserAcount;
                             result.state = "200";
                             result.msg = "登录成功！";
                             result.data = loginVM;
@@ -132,9 +133,8 @@ namespace LLCoreApi.Controllers
         public JsonResult ReSetToken([FromBody]ReSetTokenDto tokenDto)
         {
             /* 
-             * 1. refreshtoken 存储在redis  因base64加密了，需解密
-             * 2. jwtToken  有效
-             * 3. 重新生成 jwtToken 
+             * 1. 判断refreshtoken是否有效（ps:存储在redis  因base64加密了，需解密）
+             * 2. 重新生成 jwtToken 
              * 
              */
 
@@ -180,7 +180,7 @@ namespace LLCoreApi.Controllers
                 {
                     JwtTokenDto jwtDto = new JwtTokenDto();
                     jwtDto.token = token;
-                    jwtDto.tokenExpired = DateExtensions.ToShortDate(jwtExpires);
+                    jwtDto.tokenExpired = DateExtensions.ToLongDate(jwtExpires);
                     result.state = "200";
                     result.data = jwtDto;
                     result.msg = "成功";
