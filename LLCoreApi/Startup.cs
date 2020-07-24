@@ -100,7 +100,7 @@ namespace LLCoreApi
             }
 
             //强制https 跳转
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             #region Cors
             //跨域请求

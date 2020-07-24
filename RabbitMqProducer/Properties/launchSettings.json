@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "RabbitMqProducer": {
+      "commandName": "Project"
+    }
+  }
+}
